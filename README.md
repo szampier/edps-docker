@@ -3,9 +3,15 @@ This repository holds the `Dockerfile` and other configuration files which can b
 
 ## Installation
 
-1. Install docker or podman on your system if not already available
+1. Clone this repo or download ZIP
 
-1. Create docker image for one of the supported [VLT Instrument Pipelines](https://www.eso.org/sci/software/pipelines/)
+`git clone https://github.com/szampier/edps-docker.git && cd edps-docker`
+
+`wget https://github.com/szampier/edps-docker/archive/refs/heads/main.zip && unzip main.zip && cd edps-docker-main`
+
+2. Install docker or podman on your system if not already available
+
+3. Create docker image for one of the supported [VLT Instrument Pipelines](https://www.eso.org/sci/software/pipelines/)
 
 `docker build --no-cache --build-arg PIPEID=<My Pipeline> -t edps .`
 
@@ -16,11 +22,11 @@ Supported pipelines:
 * KMOS: `PIPEID=kmos`
 
 
-3. Run edps docker container
+4. Run edps docker container
 
 `docker run --rm --user=$(id -u):$(id -g) --name edps -v <My Data Dir>:/data -d edps`
 
-4. Execute edps command to reduce your data
+5. Execute edps command to reduce your data
 
 ```
 alias edps='docker exec edps edps'
@@ -31,6 +37,6 @@ edps -lw
 
 See [EDPS Tutorial](https://ftp.eso.org/pub/dfs/pipelines/libraries/edps/edps_tutorial0.9.pdf) for detailed instructions on how to use EDPS.
 
-5. Shutdown edps and delete docker container
+6. Shutdown edps and delete docker container
 
 `edps -shutdown`
