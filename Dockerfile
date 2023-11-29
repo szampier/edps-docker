@@ -25,10 +25,9 @@ RUN pip install --extra-index-url https://ftp.eso.org/pub/dfs/pipelines/librarie
 RUN python -c "from astropy.coordinates import SkyCoord"
 
 # create EDPS working directory and install config files
-RUN mkdir $EDPS_CONFIG_DIR && cd $EDPS_CONFIG_DIR
-COPY application.properties logging.yaml $EDPS_CONFIG_DIR
+RUN mkdir $EDPS_CONFIG_DIR && chmod 777 $EDPS_CONFIG_DIR
+WORKDIR $EDPS_CONFIG_DIR
+COPY application.properties logging.yaml ./
 # RUN wget https://raw.githubusercontent.com/szampier/edps-docker/main/application.properties
 # RUN wget https://raw.githubusercontent.com/szampier/edps-docker/main/logging.yaml
-RUN chmod 777 $EDPS_CONFIG_DIR
 
-WORKDIR $EDPS_CONFIG_DIR
