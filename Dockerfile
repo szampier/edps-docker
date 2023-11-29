@@ -4,7 +4,7 @@ MAINTAINER Stefano Zampieri szampier@eso.org
 ARG PIPEID
 
 ENV ADARI_SOCKET=/run/user/1111
-ENV EDPS_CONFIG_DIR=/.edps/
+ENV EDPS_CONFIG_DIR=/.edps
 
 RUN dnf install -y dnf-plugins-core && \
   dnf update -y && \
@@ -26,8 +26,9 @@ RUN python -c "from astropy.coordinates import SkyCoord"
 
 # create EDPS working directory and install config files
 RUN mkdir $EDPS_CONFIG_DIR && cd $EDPS_CONFIG_DIR
-RUN wget https://raw.githubusercontent.com/szampier/edps-docker/main/application.properties
-RUN wget https://raw.githubusercontent.com/szampier/edps-docker/main/logging.yaml
+COPY ./application.properties ./logging.yaml ./
+# RUN wget https://raw.githubusercontent.com/szampier/edps-docker/main/application.properties
+# RUN wget https://raw.githubusercontent.com/szampier/edps-docker/main/logging.yaml
 RUN chmod 777 $EDPS_CONFIG_DIR
 
 WORKDIR $EDPS_CONFIG_DIR
