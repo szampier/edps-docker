@@ -9,24 +9,23 @@ This repository holds the `Dockerfile` and other configuration files which can b
 
 `wget https://github.com/szampier/edps-docker/archive/refs/heads/main.zip && unzip main.zip && cd edps-docker-main`
 
-2. Install docker or podman on your system if not already available
+2. Install [docker](https://docs.docker.com/engine/install/#server) or [podman](https://podman.io/) on your system if not already available.
+Please note that [Docker Desktop](https://www.docker.com/products/docker-desktop/) is not required for this installation.
 
-3. Create docker image for one of the supported [VLT Instrument Pipelines](https://www.eso.org/sci/software/pipelines/)
+3. Create docker image for one or more of the supported [VLT Instrument Pipelines](https://www.eso.org/sci/software/pipelines/)
 
-`docker build --no-cache --build-arg PIPEID=<My Pipeline> -t edps .`
+`docker build --no-cache --build-arg pipeline=<comma-separated-list-of-instrument-pipelines> -t edps .`
 
-Supported pipelines:
+EDPS currently supports the following instrument pipelines: `espdr` (ESPRESSO), `uves` and `kmos`
 
-* ESPRESSO: `PIPEID=espdr`
-* UVES: `PIPEID=uves`
-* KMOS: `PIPEID=kmos`
-
+NOTE: `-t, --tag` is used to tag the container image created with `docker build`. If you change the default name (`edps`)
+please use the new name also in the `docker run` command.
 
 4. Run edps docker container
 
-`docker run --rm --user=$(id -u):$(id -g) --name edps -v <My Data Dir>:/data -d edps`
+`docker run --rm --user=$(id -u):$(id -g) --name edps -v <data-dir>:/data -d edps`
 
-5. Execute edps command to reduce your data
+5. Execute edps command (alias) to reduce your data
 
 ```
 alias edps='docker exec edps edps'
@@ -38,5 +37,9 @@ edps -lw
 See [EDPS Tutorial](https://ftp.eso.org/pub/dfs/pipelines/libraries/edps/edps_tutorial0.9.pdf) for detailed instructions on how to use EDPS.
 
 6. Shutdown edps and delete docker container
+
+`docker stop edps`
+
+or
 
 `edps -shutdown`

@@ -1,7 +1,7 @@
 FROM fedora:37
 MAINTAINER Stefano Zampieri szampier@eso.org
 
-ARG PIPEID
+ARG pipeline
 
 ENV XDG_RUNTIME_DIR=/.edps
 
@@ -14,8 +14,9 @@ RUN dnf install -y dnf-plugins-core && \
 RUN dnf install -y --setopt=install_weak_deps=False python3-networkx
 
 # install ESO pipeline (incl. EDPS workflow and ADARI reports)
-RUN dnf install -y esopipe-${PIPEID}-wkf esopipe-${PIPEID}-datastatic esopipe-detmon && \
-  dnf clean all
+RUN for pipe in $(echo ${pipeline} | tr "," "\n"); \
+    do dnf install -y esopipe-${pipe}-wkf esopipe-${pipe}-datastatic; done && \
+    dnf install -y esopipe-detmon && dnf clean all
 
 # create EDPS & ADARI runtime directory
 RUN mkdir $XDG_RUNTIME_DIR && chmod 777 $XDG_RUNTIME_DIR
