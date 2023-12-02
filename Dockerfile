@@ -25,4 +25,4 @@ COPY application.properties logging.yaml ./
 # RUN wget https://raw.githubusercontent.com/szampier/edps-docker/main/application.properties
 # RUN wget https://raw.githubusercontent.com/szampier/edps-docker/main/logging.yaml
 
-ENTRYPOINT ["edps-server"]
+# ENTRYPOINT ["edps-server"]
