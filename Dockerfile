@@ -18,7 +18,7 @@ RUN for pipe in $(echo ${pipeline} | tr "," "\n"); \
     do dnf install -y esopipe-${pipe}-wkf esopipe-${pipe}-datastatic; done && \
     dnf install -y esopipe-detmon && dnf clean all
 
-RUN pip install --extra-index-url https://ftp.eso.org/pub/dfs/pipelines/libraries edps adari_core
+RUN pip install --upgrade --extra-index-url https://ftp.eso.org/pub/dfs/pipelines/libraries edps adari_core
 
 # create EDPS & ADARI runtime directory
 RUN mkdir $XDG_RUNTIME_DIR && chmod 777 $XDG_RUNTIME_DIR
